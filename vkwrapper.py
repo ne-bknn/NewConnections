@@ -37,7 +37,7 @@ def auth():
 
     return vk
 
-def get_friends(s, target: str) -> List[int]:
+def get_friends(s, target: str) -> List[str]:
     if c.contains(target):
         friends = c.get(target)
         log.debug("[+] Found {} in cache".format(target))
@@ -50,6 +50,8 @@ def get_friends(s, target: str) -> List[int]:
             friends = [] 
         
         c.add(target, friends)
+    
+    friends = [str(friend) for friend in friends]
 
     return friends
 

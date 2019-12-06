@@ -1,5 +1,17 @@
 from cache import FileCache
 
+def test_networkx():
+    import networkx
+
+def test_igraph():
+    import igraph
+
+def test_vkapi():
+    import vk_api
+
+def test_cairo():
+    import cairo
+
 def test_contains_1():
     c = FileCache()
     assert c.contains("123") == False
