@@ -23,6 +23,15 @@ def test_contains_2():
     c.delete("123")
     assert c.contains("123") == False
 
+def test_contains_in_new_cache():
+    c1 = FileCache()
+    c1.add("123", [])
+    assert c1.contains("123") == True
+    c2 = FileCache()
+    assert c2.contains("123") == True
+    c1.flush()
+    c2.flush()
+
 def test_get():
     c = FileCache()
     c.add("123", ["1", "2", "3"])

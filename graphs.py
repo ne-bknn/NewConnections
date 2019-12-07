@@ -1,6 +1,5 @@
 #############################################
-# An attempt to write this part without     #
-# networkx, it was used just because        #
+# An attempt to write this part without     # networkx, it was used just because        #
 # it's usage and plotting is a bit simpler. #
 # But igraph is way more powerful and       #
 # convertion is just extremely ugly         #
@@ -60,4 +59,5 @@ class Graph:
         raise NotImplemented
 
     def draw_graph(self) -> None:
-        raise NotImplemented
+        layout = self.g.layout("fr")
+        igraph.plot(self.g, layout = layout)

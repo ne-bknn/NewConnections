@@ -56,11 +56,12 @@ class FileCache(AbstractCache):
     def __init__(self, path_to_cache: str = "/dev/shm") -> None:
         """path_to_cache may be changed to arbitrary path"""
         cache_folder_name = "newcon_cache"
-        self.index = set()
         self.path_to_cache = os.path.join(path_to_cache, cache_folder_name)
         if "newcon_cache" not in os.listdir(path_to_cache):
             os.chdir(path_to_cache)
             os.mkdir(cache_folder_name)
+        
+        self.index = set([filename[:-4] for filename in os.listdir(self.path_to_cache) if filename.endswith(".lst")])
 
     def contains(self, target: str) -> bool:
         """Checks whether this user is in cache"""
@@ -100,7 +101,11 @@ class FileCache(AbstractCache):
     def delete(self, target: str, clear_index: bool = True) -> None:
         """Deletes entry by ID"""
         filename = os.path.join(self.path_to_cache, f"{target}.lst")
-        os.remove(filename)
+        try:
+            os.remove(filename)
+        except FileNotFoundError:
+            pass
+
         if clear_index:
             self.index.remove(target)
 
