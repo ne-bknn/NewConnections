@@ -80,5 +80,5 @@ def test_graph_creation():
     from graphs import Graph
 
     v = Vk(cache=FileCache(), login=login, password=passwd)
-    g = Graph(v)
+    g = Graph(v, "238696131")
 

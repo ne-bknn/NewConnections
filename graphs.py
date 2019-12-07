@@ -31,7 +31,7 @@ class Graph:
 
     #    self.nx_graph = nx_graph
 
-    def __init__(self, vk, vk_id: str = "0") -> None:
+    def __init__(self, vk, vk_id: str) -> None:
         self.vk = vk
         target_friends = vk.get_friends(vk_id)
         ig_graph = igraph.Graph()
@@ -42,11 +42,16 @@ class Graph:
         for friend in target_friends:
             current_user_friends = vk.get_friends(friend)
             # remove everyone who is not target's friend and add edges
-            ig_graph.add_edges([(friend, ff) for ff in current_user_friends if ff in target_friends])
+            # filter out duplicate edges
+            frlist = [tuple(sorted((friend, ff))) for ff in current_user_friends if ff in target_friends]
+            frlist = list(set(frlist))
+            ig_graph.add_edges(frlist)
 
         self.g = ig_graph
+        self.target = vk_id
 
     def get_community_labels(self) -> None:
+        # clean graph from orphans
         raise NotImplemented
 
     def expand_communities(self) -> None:
@@ -61,3 +66,4 @@ class Graph:
     def draw_graph(self) -> None:
         layout = self.g.layout("fr")
         igraph.plot(self.g, layout = layout)
+
