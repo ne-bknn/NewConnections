@@ -37,3 +37,39 @@ def test_flush():
     c.flush()
     assert c.contains("123") == False
     assert c.contains("326") == False
+
+def test_auth():
+    with open("passwd", "r") as f:
+        s = f.readlines()
+
+    login = s[0].strip()
+    passwd = s[1].strip()
+    
+    # checks whether creds are valid
+    assert login.endswith("2")
+
+    from vkwrapper import Vk
+
+    v = Vk(cache=FileCache(), login=login, password=passwd)
+
+    l1 = v.get_friends("525008285")
+    l2 = v.get_friends("288999853")
+    
+    # just type checks
+    assert isinstance(l1, list) and isinstance(l2, list) and isinstance(l1[0], str) and isinstance(l2[-1], str)
+
+def test_graph_creation():
+    with open("passwd", "r") as f:
+        s = f.readlines()
+
+    login = s[0].strip()
+    passwd = s[1].strip()
+
+    assert login.endswith("2")
+
+    from vkwrapper import Vk
+    from graphs import Graph
+
+    v = Vk(cache=FileCache(), login=login, password=passwd)
+    g = Graph(v)
+

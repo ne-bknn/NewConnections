@@ -13,7 +13,7 @@ import os
 import igraph
 import networkx as nx
 
-from vkwrapper import vk
+from vkwrapper import Vk
 
 class Graph:
     #def __init__(self, vk, vk_id: str = "0") -> None:
@@ -43,7 +43,7 @@ class Graph:
         for friend in target_friends:
             current_user_friends = vk.get_friends(friend)
             # remove everyone who is not target's friend and add edges
-            ig_graph.add_edges([(friend, ff) for ff in current_user_friends if ff in friends])
+            ig_graph.add_edges([(friend, ff) for ff in current_user_friends if ff in target_friends])
 
         self.g = ig_graph
 
@@ -61,4 +61,3 @@ class Graph:
 
     def draw_graph(self) -> None:
         raise NotImplemented
-

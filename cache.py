@@ -25,6 +25,29 @@ class AbstractCache:
         raise NotImplemented
 
 
+class DummyCache(AbstractCache):
+    def __init__(self):
+        pass
+    
+    def contains(self, target: str) -> bool:
+        return False
+
+    def get(self, target: str) -> List[str]:
+        return "DUMMY"
+
+    def add(self, target: str, friends: List[str]) -> None:
+        pass
+
+    def delete(self, target: str) -> None:
+        pass
+
+    def invalidate(self) -> int:
+        return 0 
+
+    def flush(self) -> None:
+        pass
+
+
 class FileCache(AbstractCache):
     """
        Filesystem-based caching
