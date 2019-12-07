@@ -1,16 +1,16 @@
 # TODO
 
 ### Caching
-[ ] FileCache invalidation based on creation time
-[ ] Cache in Redis
+- [ ] FileCache invalidation based on creation time
+- [ ] Cache in Redis
 
 ### Algos
-[ ] Different clustering algos
-[ ] Plotting feature
-[ ] **Efficient** community expansion algo
+- [ ] Different clustering algos
+- [ ] Plotting feature
+- [ ] **Efficient** community expansion algo
 
 ### Presentation
-[ ] Web app
+- [ ] Web app
 
 ### Misc
-[ ] OAuth2
+- [ ] OAuth2
