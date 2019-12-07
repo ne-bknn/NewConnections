@@ -1,0 +1,4 @@
+vk-api==11.6.0
+networkx==2.4
+python-igraph==0.7.1.post6
+pycairo==1.18.2
