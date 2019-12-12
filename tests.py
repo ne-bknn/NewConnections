@@ -82,3 +82,20 @@ def test_graph_creation():
     v = Vk(cache=FileCache(), login=login, password=passwd)
     g = Graph(v, "238696131")
 
+def test_get_community_labels():
+    with open("passwd", "r") as f:
+        s = f.readlines()
+    
+    login = s[0].strip()
+    passwd = s[1].strip()
+
+    assert login.endswith("2")
+    
+    from vkwrapper import Vk
+    from graphs import Graph
+
+    v = Vk(cache=FileCache(), login=login, password=passwd)
+    g = Graph(v, "238696131")
+
+    g.get_community_labels()
+
