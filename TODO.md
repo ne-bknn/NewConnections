@@ -6,7 +6,7 @@
 
 ### Algos
 - [ ] Different clustering algos
-- [ ] Plotting feature
+- [x] Plotting feature
 - [ ] **Efficient** community expansion algo
 
 ### Presentation
