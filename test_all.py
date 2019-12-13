@@ -1,29 +1,41 @@
 from cache import FileCache
+import pytest
 
-def test_networkx():
+@pytest.mark.dependency
+def test_dep_networkx():
     import networkx
 
-def test_igraph():
+@pytest.mark.dependency
+def test_dep_igraph():
     import igraph
 
-def test_vkapi():
+@pytest.mark.dependency
+def test_dep_vkapi():
     import vk_api
 
-def test_cairo():
+@pytest.mark.dependency
+def test_dep_cairo():
     import cairo
 
-def test_contains_1():
+@pytest.mark.smoke
+def test_cache_smoke():
+    c = FileCache()
+
+@pytest.mark.sanity
+def test_cache_contains_1():
     c = FileCache()
     assert c.contains("123") == False
 
-def test_contains_2():
+@pytest.mark.sanity
+def test_cache_contains_2():
     c = FileCache()
     c.add("123", [])
     assert c.contains("123") == True
     c.delete("123")
     assert c.contains("123") == False
 
-def test_contains_in_new_cache():
+@pytest.mark.sanity
+def test__cache_contains_in_new_cache():
     c1 = FileCache()
     c1.add("123", [])
     assert c1.contains("123") == True
@@ -32,14 +44,16 @@ def test_contains_in_new_cache():
     c1.flush()
     c2.flush()
 
-def test_get():
+@pytest.mark.sanity
+def test_cache_get():
     c = FileCache()
     c.add("123", ["1", "2", "3"])
     assert c.get("123") == ["1", "2", "3"]
     c.delete("123")
     assert c.contains("123") == False
 
-def test_flush():
+@pytest.mark.sanity
+def test_cache_flush():
     c = FileCache()
     c.add("123", ["1", "2"])
     c.add("326", ["3", "2"])
@@ -56,7 +70,8 @@ def get_login_password():
 
     return login, passwd
 
-def test_auth():
+@pytest.mark.sanity
+def test_vk_auth():
     login, passwd = get_login_password()
 
     # checks whether creds are valid
@@ -72,6 +87,7 @@ def test_auth():
     # just type checks
     assert isinstance(l1, list) and isinstance(l2, list) and isinstance(l1[0], str) and isinstance(l2[-1], str)
 
+@pytest.mark.integration
 def test_graph_creation():
     login, passwd = get_login_password()
 
@@ -83,7 +99,8 @@ def test_graph_creation():
     v = Vk(cache=FileCache(), login=login, password=passwd)
     g = Graph(v, "238696131")
 
-def test_duplicating_edges():
+@pytest.mark.sanity
+def test_graph_duplicating_edges():
     login, passwd = get_login_password()
     assert login.endswith("2")
 
@@ -95,7 +112,8 @@ def test_duplicating_edges():
 
     assert g.g.is_simple() == True
 
-def test_get_community_labels():
+@pytest.mark.smoke
+def test_graph_get_community_labels():
     login, passwd = get_login_password()
     assert login.endswith("2")
     
@@ -107,7 +125,8 @@ def test_get_community_labels():
 
     g.get_community_labels()
 
-def test_get_community_labels_sparse_graph():
+@pytest.mark.smoke
+def test__graph_get_community_labels_sparse_graph():
     login, passwd = get_login_password()
     assert login.endswith("2")
 
