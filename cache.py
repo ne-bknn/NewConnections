@@ -62,6 +62,12 @@ class FileCache(AbstractCache):
             os.mkdir(cache_folder_name)
         
         self.index = set([filename[:-4] for filename in os.listdir(self.path_to_cache) if filename.endswith(".lst")])
+    
+    def __new__(self):
+        """This modification makes FileCache singleton, there's always only one instance of it"""
+        if not hasattr(self, 'instance'):
+            self.instance = super(FileCache, self).__new__(self)
+        return self.instance
 
     def contains(self, target: str) -> bool:
         """Checks whether this user is in cache"""
