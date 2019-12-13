@@ -36,8 +36,9 @@ class Graph:
             frlist = [tuple(sorted((friend, ff))) for ff in current_user_friends if ff in target_friends]
             frlist = list(set(frlist))
             ig_graph.add_edges(frlist)
-
-        self.g = ig_graph
+        
+        # simple solution for removing multiple edges
+        self.g = ig_graph.simplify()
         self.target = vk_id
 
     def get_community_labels(self) -> None:

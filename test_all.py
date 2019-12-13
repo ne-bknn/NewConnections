@@ -47,13 +47,18 @@ def test_flush():
     assert c.contains("123") == False
     assert c.contains("326") == False
 
-def test_auth():
+def get_login_password():
     with open("passwd", "r") as f:
         s = f.readlines()
 
     login = s[0].strip()
     passwd = s[1].strip()
-    
+
+    return login, passwd
+
+def test_auth():
+    login, passwd = get_login_password()
+
     # checks whether creds are valid
     assert login.endswith("2")
 
@@ -68,11 +73,7 @@ def test_auth():
     assert isinstance(l1, list) and isinstance(l2, list) and isinstance(l1[0], str) and isinstance(l2[-1], str)
 
 def test_graph_creation():
-    with open("passwd", "r") as f:
-        s = f.readlines()
-
-    login = s[0].strip()
-    passwd = s[1].strip()
+    login, passwd = get_login_password()
 
     assert login.endswith("2")
 
@@ -81,14 +82,21 @@ def test_graph_creation():
 
     v = Vk(cache=FileCache(), login=login, password=passwd)
     g = Graph(v, "238696131")
+
+def test_duplicating_edges():
+    login, passwd = get_login_password()
+    assert login.endswith("2")
+
+    from vkwrapper import Vk
+    from graphs import Graph
+
+    v = Vk(cache=FileCache(), login=login, password=passwd)
+    g = Graph(v, "238696131")
+
+    assert g.g.is_simple() == True
 
 def test_get_community_labels():
-    with open("passwd", "r") as f:
-        s = f.readlines()
-    
-    login = s[0].strip()
-    passwd = s[1].strip()
-
+    login, passwd = get_login_password()
     assert login.endswith("2")
     
     from vkwrapper import Vk
@@ -96,6 +104,18 @@ def test_get_community_labels():
 
     v = Vk(cache=FileCache(), login=login, password=passwd)
     g = Graph(v, "238696131")
+
+    g.get_community_labels()
+
+def test_get_community_labels_sparse_graph():
+    login, passwd = get_login_password()
+    assert login.endswith("2")
+
+    from vkwrapper import Vk
+    from graphs import Graph
+
+    v = Vk(cache=FileCache(), login=login, password=passwd)
+    g = Graph(v, "148907612")
 
     g.get_community_labels()
 
