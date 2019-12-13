@@ -42,6 +42,9 @@ class Graph:
         self.target = vk_id
 
     def get_community_labels(self) -> None:
+        VERTICES_THRESHOLD = 600
+        EDGES_THRESHOLD = 3000
+
         g_clean = self.g
 
         # 1. delete target, because target is in every community and it
@@ -58,9 +61,14 @@ class Graph:
         g_clean.vs.select(_degree=0).delete()
     
         # now we have cleaned graph. cluster it
-        dendrogram = g_clean.community_edge_betweenness()
-        clusters = dendrogram.as_clustering()
-        membership = clusters.membership
+        if not (len(g_clean.vs) > VERTICES_THRESHOLD or len(g_clean.es) > EDGES_THRESHOLD):
+            dendrogram = g_clean.community_edge_betweenness()
+            clusters = dendrogram.as_clustering()
+            membership = clusters.membership
+        else:
+            clusters = g_clean.community_multilevel()
+            membership = clusters.membership
+
         for i in range(len(g_clean.vs)):
             g_clean.vs[i]["cluster"] = membership[i]
         
