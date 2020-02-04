@@ -63,6 +63,7 @@ class Graph:
         # now we have cleaned graph. cluster it
         if not (len(g_clean.vs) > VERTICES_THRESHOLD or len(g_clean.es) > EDGES_THRESHOLD):
             dendrogram = g_clean.community_edge_betweenness()
+            fix_dendrogram(g_clean, dendrogram)
             clusters = dendrogram.as_clustering()
             membership = clusters.membership
         else:
@@ -114,4 +115,23 @@ class Graph:
             # if the clustering wasn't done yet
             layout = self.g.layout("fr")
             igraph.plot(self.g, layout = layout)
+
+def fix_dendrogram(graph, cl):
+    already_merged = set()
+    for merge in cl.merges:
+        already_merged.update(merge)
+
+    num_dendrogram_nodes = graph.vcount() + len(cl.merges)
+    not_merged_yet = sorted(set(range(num_dendrogram_nodes)) - already_merged)
+    if len(not_merged_yet) < 2:
+        return
+
+    v1, v2 = not_merged_yet[:2]
+    cl._merges.append((v1, v2))
+    del not_merged_yet[:2]
+
+    missing_nodes = list(range(num_dendrogram_nodes,
+            num_dendrogram_nodes + len(not_merged_yet)))
+    cl._merges.extend(zip(not_merged_yet, missing_nodes))
+    cl._nmerges = graph.vcount()-1
 
