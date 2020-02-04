@@ -6,19 +6,14 @@ Under the hood we get friendlist and connections between them, find communities 
 
 # Current usage
 In Python REPL you can just
-```
+
+```python
 from graphs import Graph
-
 from vkwrapper import Vk
-
 from cache import FileCache
 
-
 v = Vk(cache=FileCache())
-
 g = Graph(v, "target_id")
-
 g.get_community_lables()
-
 g.draw_graph()
 ```
