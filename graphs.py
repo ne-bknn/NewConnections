@@ -93,15 +93,15 @@ class Graph:
         self.clusters = clusters
 
     def expand_communities(self) -> None:
-        raise NotImplemented
+        raise NotImplementedError
 
     def get_friends_per_community(self) -> None:
         # note to myself: cluster == -1 should be checked and means that
         # this node does not belong to any cluster. important!
-        raise NotImplemented
+        raise NotImplementedError
 
     def find_friends_intersection(self) -> None:
-        raise NotImplemented
+        raise NotImplementedError
 
     def draw_graph(self) -> None:
         try:

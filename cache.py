@@ -4,25 +4,25 @@ from typing import List
 
 class AbstractCache:
     def __init__(self):
-        raise NotImplemented
+        raise NotImplementedError
 
     def contains(self, target: str) -> bool:
-        raise NotImplemented
+        raise NotImplementedError
 
     def get(self, target: str) -> List[str]:
-        raise NotImplemented
+        raise NotImplementedError
 
     def add(self, target: str, friends: List[str]) -> None:
-        raise NotImplemented
+        raise NotImplementedError
 
     def delete(self, target: str) -> None:
-        raise NotImplemented
+        raise NotImplementedError
 
     def invalidate(self) -> int:
-        raise NotImplemented
+        raise NotImplementedError
 
     def flush(self) -> None:
-        raise NotImplemented
+        raise NotImplementedError
 
 
 class DummyCache(AbstractCache):
@@ -102,7 +102,7 @@ class FileCache(AbstractCache):
     def invalidate(self) -> int:
         """Invalidates cache based on time file created. Returns amount
            entries deleted from cache"""
-        raise NotImplemented
+        raise NotImplementedError
 
     def delete(self, target: str, clear_index: bool = True) -> None:
         """Deletes entry by ID"""
