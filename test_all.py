@@ -74,9 +74,6 @@ def get_login_password():
 def test_vk_auth():
     login, passwd = get_login_password()
 
-    # checks whether creds are valid
-    assert login.endswith("2")
-
     from vkwrapper import Vk
 
     v = Vk(cache=FileCache(), login=login, password=passwd)
@@ -91,8 +88,6 @@ def test_vk_auth():
 def test_graph_creation():
     login, passwd = get_login_password()
 
-    assert login.endswith("2")
-
     from vkwrapper import Vk
     from graphs import Graph
 
@@ -102,7 +97,6 @@ def test_graph_creation():
 @pytest.mark.sanity
 def test_graph_duplicating_edges():
     login, passwd = get_login_password()
-    assert login.endswith("2")
 
     from vkwrapper import Vk
     from graphs import Graph
@@ -115,7 +109,6 @@ def test_graph_duplicating_edges():
 @pytest.mark.smoke
 def test_graph_get_community_labels():
     login, passwd = get_login_password()
-    assert login.endswith("2")
     
     from vkwrapper import Vk
     from graphs import Graph
@@ -128,7 +121,6 @@ def test_graph_get_community_labels():
 @pytest.mark.smoke
 def test__graph_get_community_labels_sparse_graph():
     login, passwd = get_login_password()
-    assert login.endswith("2")
 
     from vkwrapper import Vk
     from graphs import Graph
